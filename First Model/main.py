@@ -3,6 +3,7 @@ import torch.nn as nn
 import numpy as np
 import torch.optim as optim
 from model import LinearRegressionModel
+import matplotlib.pyplot as plt
 
 x = np.array([i for i in range(100)])
 x = x.reshape(-1, 1)
@@ -49,6 +50,16 @@ with torch.no_grad():
 prediction = prediction_normalized.item() * y_std + y_mean
 
 print(f"Predicted value for x = {x1}: {prediction}")
+
+plt.scatter(x, y, label="Initial data")
+plt.title("Prediction Graph")
+plt.xlabel('x')
+plt.ylabel('y')
+fit_line = model(x_tensor).detach().numpy() * y_std + y_mean
+plt.plot(fit_line, 'r', label="Pytorch Line")
+
+plt.legend()
+plt.show()
 
 
 
